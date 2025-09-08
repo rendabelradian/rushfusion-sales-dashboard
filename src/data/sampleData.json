@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Alice",
+    "yesCount": 5,
+    "emails": 877,
+    "responseRate": 0.6,
+    "avatar": "/icons/alice.png"
+  },
+  {
+    "name": "Bob",
+    "yesCount": 4,
+    "emails": 111,
+    "responseRate": 3.6,
+    "avatar": "/icons/bob.png"
+  },
+  {
+    "name": "Charlie",
+    "yesCount": 0,
+    "emails": 576,
+    "responseRate": 0,
+    "avatar": "/icons/charlie.png"
+  }
+]
