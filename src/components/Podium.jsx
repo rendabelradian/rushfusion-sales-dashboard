@@ -3,10 +3,9 @@ import Image from "next/image"
 export default function Podium({ ranking }) {
   if (!ranking || ranking.length < 3) return null
 
-  // Sort by yesCount (descending)
+  // Sort by sales (yesCount)
   const sorted = [...ranking].sort((a, b) => b.yesCount - a.yesCount)
-
-  const podiumOrder = [sorted[0], sorted[1], sorted[2]] // top 3
+  const podiumOrder = [sorted[0], sorted[1], sorted[2]] // Top 3
 
   return (
     <div className="flex justify-center items-end gap-8 mt-12">
@@ -27,6 +26,7 @@ export default function Podium({ ranking }) {
                 width={80}
                 height={80}
                 className="rounded-full border-4 border-white shadow-md"
+                onError={(e) => (e.target.src = "/icons/default.png")}
               />
             </div>
 
@@ -35,7 +35,7 @@ export default function Podium({ ranking }) {
               className={`${colors[index]} rounded-t-lg flex flex-col items-center justify-end text-white font-bold shadow-lg`}
               style={{ height: `${150 + rep.yesCount * 10}px`, width: "100px" }}
             >
-              <p className="mb-1">{rep.yesCount} Yes</p>
+              <p className="mb-1">{rep.yesCount} Sales</p>
             </div>
 
             {/* Rank Label */}

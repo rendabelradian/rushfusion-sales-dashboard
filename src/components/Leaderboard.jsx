@@ -6,59 +6,47 @@ export default function Leaderboard({ ranking }) {
   const [selectedRep, setSelectedRep] = useState(null)
 
   return (
-    <div className="mt-8 w-full max-w-4xl">
-      <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-        <thead className="bg-gray-100 text-gray-700">
+    <div className="mt-12 w-full max-w-4xl mx-auto">
+      <table className="w-full text-left border-collapse shadow-md rounded-lg overflow-hidden bg-white">
+        <thead className="bg-gray-100 text-gray-800 font-semibold">
           <tr>
-            <th className="text-left p-3">Rank</th>
-            <th className="text-left p-3">Rep</th>
-            <th className="text-left p-3">Response Rate</th>
-            <th className="text-left p-3">Emails</th>
-            <th className="text-left p-3">Yes</th>
+            <th className="p-3">Rank</th>
+            <th className="p-3">Rep</th>
+            <th className="p-3">Sales</th>
+            <th className="p-3">Commission</th>
           </tr>
         </thead>
         <tbody>
           {ranking.map((rep, index) => (
             <tr
-              key={index}
-              className="border-t hover:bg-gray-50 cursor-pointer"
+              key={rep.id}
+              className="hover:bg-gray-50 transition cursor-pointer"
               onClick={() => setSelectedRep(rep)}
             >
-              <td className="p-3 font-medium text-gray-800">{index + 1}</td>
+              <td className="p-3 text-gray-800 font-medium">{index + 1}</td>
               <td className="p-3 flex items-center gap-3 text-gray-800">
                 <Image
-                  src={`/icons/${rep.name?.toLowerCase()}.png`}
-                  alt={rep.name || "Rep"}
+                  src={`/icons/${rep.name.toLowerCase()}.png`}
+                  alt={rep.name}
                   width={40}
                   height={40}
-                  className="rounded-full border border-gray-300"
+                  className="rounded-full border"
+                  onError={(e) => (e.target.src = "/icons/default.png")}
                 />
-                {rep.name || "Unknown"}
+                <span className="font-medium text-gray-800">{rep.name}</span>
               </td>
-              <td className="p-3 text-gray-800">
-                <div className="w-full bg-gray-200 rounded-full h-2 mb-1">
-                  <div
-                    className="bg-blue-500 h-2 rounded-full"
-                    style={{ width: `${rep.responseRate}%` }}
-                  ></div>
-                </div>
-                <span className="text-sm text-gray-600">
-                  {rep.responseRate}%
-                </span>
-              </td>
-              <td className="p-3 text-gray-800">{rep.emails}</td>
               <td className="p-3 text-gray-800">{rep.yesCount}</td>
+              <td className="p-3 text-green-600 font-semibold">
+                ${rep.commission}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Modal only renders when a rep is selected */}
+      {/* Profile Modal */}
       {selectedRep && (
-        <ProfileCard
-          rep={selectedRep}
-          onClose={() => setSelectedRep(null)}
-        />
+        <ProfileCard rep={selectedRep} onClose={() => setSelectedRep(null)} />
       )}
     </div>
   )
