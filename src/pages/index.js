@@ -25,16 +25,21 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-50 p-8">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-50 px-4 sm:px-8 py-6">
       {/* Header with logo + logout */}
-      <div className="flex items-center justify-between w-full max-w-5xl mb-6">
+      <div className="flex flex-col sm:flex-row items-center justify-between w-full max-w-5xl mb-6 gap-4 sm:gap-0">
+        {/* Logo + Title */}
         <div className="flex items-center gap-3">
           <img src="/icons/f100.avif" alt="Logo" className="w-10 h-10" />
-          <h1 className="text-4xl font-bold text-gray-900">RushFusion Sales</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 text-center sm:text-left">
+            RushFusion Sales
+          </h1>
         </div>
+
+        {/* Logout Button */}
         <button
           onClick={handleLogout}
-          className="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition"
+          className="w-full sm:w-auto px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition"
         >
           Logout
         </button>

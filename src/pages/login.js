@@ -29,7 +29,7 @@ export default function Login() {
         {/* Title */}
         <h1 className="text-2xl font-bold text-gray-900 flex items-center justify-center gap-2 mb-6">
           <span role="img" aria-label="lock">🔒</span>
-          Login to Dashboard
+          Login to RushFusion100
         </h1>
 
         {/* Error Message */}
