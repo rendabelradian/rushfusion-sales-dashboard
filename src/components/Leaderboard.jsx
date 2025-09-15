@@ -7,6 +7,11 @@ export default function Leaderboard({ ranking }) {
 
   return (
     <div className="mt-12 w-full max-w-4xl mx-auto">
+      {/* Title */}
+      <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+        📊 Sales Performance Leaderboard
+      </h2>
+
       <table className="w-full text-left border-collapse shadow-md rounded-lg overflow-hidden bg-white">
         <thead className="bg-gray-100 text-gray-800 font-semibold">
           <tr>
@@ -35,9 +40,11 @@ export default function Leaderboard({ ranking }) {
                 />
                 <span className="font-medium text-gray-800">{rep.name}</span>
               </td>
-              <td className="p-3 text-gray-800">{rep.yesCount}</td>
+              <td className="p-3 text-gray-800">
+                {rep.sales || rep.yesCount || 0}
+              </td>
               <td className="p-3 text-green-600 font-semibold">
-                ${rep.commission}
+                ${rep.commission || 0}
               </td>
             </tr>
           ))}

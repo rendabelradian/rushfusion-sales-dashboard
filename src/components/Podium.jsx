@@ -1,48 +1,86 @@
 import Image from "next/image"
 
 export default function Podium({ ranking }) {
-  if (!ranking || ranking.length < 3) return null
+  if (!ranking || ranking.length === 0) return null
 
-  // Sort by sales (yesCount)
-  const sorted = [...ranking].sort((a, b) => b.yesCount - a.yesCount)
-  const podiumOrder = [sorted[0], sorted[1], sorted[2]] // Top 3
+  // Filter out reps with 0 sales
+  const filteredRanking = ranking.filter(rep => (rep.sales || rep.yesCount) > 0)
+
+  // Only take top 3 sorted by sales
+  const topThree = [...filteredRanking]
+    .sort((a, b) => (b.sales || b.yesCount) - (a.sales || a.yesCount))
+    .slice(0, 3)
+
+  // Podium order: 2nd, 1st, 3rd
+  const podiumOrder = [topThree[1], topThree[0], topThree[2]]
 
   return (
-    <div className="flex justify-center items-end gap-8 mt-12">
-      {podiumOrder.map((rep, index) => {
-        const colors = ["bg-yellow-400", "bg-gray-400", "bg-orange-500"]
-        const ranks = ["1st", "2nd", "3rd"]
+    <div className="w-full max-w-4xl mx-auto mt-12">
+      {/* Title */}
+      <h2 className="text-3xl font-bold text-center mb-20 text-gray-800">
+        🏆 Sales Champion Podium
+      </h2>
 
-        return (
-          <div
-            key={rep.id}
-            className="flex flex-col items-center relative"
-          >
-            {/* Avatar */}
-            <div className="absolute -top-12">
-              <Image
-                src={`/icons/${rep.name.toLowerCase()}.png`}
-                alt={rep.name}
-                width={80}
-                height={80}
-                className="rounded-full border-4 border-white shadow-md"
-                onError={(e) => (e.target.src = "/icons/default.png")}
-              />
-            </div>
-
-            {/* Podium Bar */}
+      <div className="flex justify-center items-end space-x-8">
+        {podiumOrder.map((rep, index) =>
+          rep ? (
             <div
-              className={`${colors[index]} rounded-t-lg flex flex-col items-center justify-end text-white font-bold shadow-lg`}
-              style={{ height: `${150 + rep.yesCount * 10}px`, width: "100px" }}
+              key={rep.name}
+              className="flex flex-col items-center relative"
             >
-              <p className="mb-1">{rep.yesCount} Sales</p>
-            </div>
+              {/* Crown for 1st place */}
+              {index === 1 && (
+                <div className="absolute -top-16 text-4xl animate-bounce">
+                  👑
+                </div>
+              )}
 
-            {/* Rank Label */}
-            <p className="mt-2 text-gray-800 font-semibold">{ranks[index]}</p>
-          </div>
-        )
-      })}
+              {/* Avatar */}
+              <div className="absolute -top-10">
+                <Image
+                  src={`/icons/${rep.name.toLowerCase()}.png`}
+                  alt={rep.name}
+                  width={80}
+                  height={80}
+                  className="rounded-full border-4 border-white shadow-lg bg-white"
+                />
+              </div>
+
+              {/* Podium block */}
+              <div
+                className={`flex flex-col justify-center items-center rounded-t-lg w-28`}
+                style={{
+                  height: `${150 + (rep.sales || rep.yesCount) * 15}px`,
+                  backgroundColor:
+                    index === 0
+                      ? "#9ca3af" // 2nd place → gray
+                      : index === 1
+                      ? "#facc15" // 1st place → yellow
+                      : "#fb923c", // 3rd place → orange
+                }}
+              >
+                <p className="text-white font-bold text-lg mt-10">
+                  {(rep.sales || rep.yesCount) + " Sales"}
+                </p>
+              </div>
+
+              {/* Rank label */}
+              <p className="mt-3 font-bold text-gray-800 text-lg">
+                {index === 0
+                  ? "2nd"
+                  : index === 1
+                  ? "1st"
+                  : "3rd"}
+              </p>
+
+              {/* Name */}
+              <p className="mt-1 text-gray-700 font-medium">{rep.name}</p>
+            </div>
+          ) : (
+            <div key={index} className="w-28"></div>
+          )
+        )}
+      </div>
     </div>
   )
 }
