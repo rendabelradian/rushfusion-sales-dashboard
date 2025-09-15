@@ -26,7 +26,7 @@ export default function ProfileCard({ rep, onClose }) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg shadow-xl p-6 w-[400px] relative transform transition-all duration-300 scale-95 hover:scale-100"
+        className="bg-white rounded-lg shadow-xl p-6 w-[400px] max-w-[90%] relative transform transition-all duration-300 scale-95 hover:scale-100"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -62,7 +62,11 @@ export default function ProfileCard({ rep, onClose }) {
           </h3>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={weeklyData}>
-              <XAxis dataKey="week" stroke="#888" fontSize={12} />
+              <XAxis
+                dataKey="week"
+                stroke="#888"
+                tick={{ fontSize: 10, fill: "#888" }} // ✅ fixed
+              />
               <YAxis hide />
               <Tooltip />
               <Line

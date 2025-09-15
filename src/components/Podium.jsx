@@ -15,13 +15,13 @@ export default function Podium({ ranking }) {
   const podiumOrder = [topThree[1], topThree[0], topThree[2]]
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-12">
+    <div className="w-full max-w-4xl mx-auto mt-12 px-4">
       {/* Title */}
-      <h2 className="text-3xl font-bold text-center mb-20 text-gray-800">
+      <h2 className="text-xl sm:text-3xl font-bold text-center mb-12 sm:mb-20 text-gray-800">
         🏆 Sales Champion Podium
       </h2>
 
-      <div className="flex justify-center items-end space-x-8">
+      <div className="flex justify-center items-end space-x-4 sm:space-x-8">
         {podiumOrder.map((rep, index) =>
           rep ? (
             <div
@@ -30,27 +30,27 @@ export default function Podium({ ranking }) {
             >
               {/* Crown for 1st place */}
               {index === 1 && (
-                <div className="absolute -top-16 text-4xl animate-bounce">
+                <div className="absolute -top-10 sm:-top-16 text-2xl sm:text-4xl animate-bounce">
                   👑
                 </div>
               )}
 
               {/* Avatar */}
-              <div className="absolute -top-10">
+              <div className="absolute -top-8 sm:-top-10">
                 <Image
                   src={`/icons/${rep.name.toLowerCase()}.png`}
                   alt={rep.name}
-                  width={80}
-                  height={80}
-                  className="rounded-full border-4 border-white shadow-lg bg-white"
+                  width={60}
+                  height={60}
+                  className="sm:w-20 sm:h-20 rounded-full border-4 border-white shadow-lg bg-white"
                 />
               </div>
 
               {/* Podium block */}
               <div
-                className={`flex flex-col justify-center items-center rounded-t-lg w-28`}
+                className={`flex flex-col justify-center items-center rounded-t-lg w-20 sm:w-28`}
                 style={{
-                  height: `${150 + (rep.sales || rep.yesCount) * 15}px`,
+                  height: `${100 + (rep.sales || rep.yesCount) * 12}px`,
                   backgroundColor:
                     index === 0
                       ? "#9ca3af" // 2nd place → gray
@@ -59,13 +59,13 @@ export default function Podium({ ranking }) {
                       : "#fb923c", // 3rd place → orange
                 }}
               >
-                <p className="text-white font-bold text-lg mt-10">
+                <p className="text-white font-bold text-sm sm:text-lg mt-8 sm:mt-10">
                   {(rep.sales || rep.yesCount) + " Sales"}
                 </p>
               </div>
 
               {/* Rank label */}
-              <p className="mt-3 font-bold text-gray-800 text-lg">
+              <p className="mt-2 sm:mt-3 font-bold text-gray-800 text-sm sm:text-lg">
                 {index === 0
                   ? "2nd"
                   : index === 1
@@ -74,10 +74,12 @@ export default function Podium({ ranking }) {
               </p>
 
               {/* Name */}
-              <p className="mt-1 text-gray-700 font-medium">{rep.name}</p>
+              <p className="mt-1 text-gray-700 font-medium text-xs sm:text-base">
+                {rep.name}
+              </p>
             </div>
           ) : (
-            <div key={index} className="w-28"></div>
+            <div key={index} className="w-20 sm:w-28"></div>
           )
         )}
       </div>
