@@ -5,6 +5,12 @@ import ProfileCard from "./ProfileCard"
 export default function Leaderboard({ ranking }) {
   const [selectedRep, setSelectedRep] = useState(null)
 
+  // Ensure sales is always a number (default 0 if missing)
+  const normalizedRanking = ranking.map((rep) => ({
+    ...rep,
+    sales: rep.sales !== undefined ? rep.sales : rep.yesCount || 0,
+  }))
+
   return (
     <div className="mt-12 w-full max-w-4xl mx-auto">
       {/* Title */}
@@ -18,13 +24,12 @@ export default function Leaderboard({ ranking }) {
             <th className="p-3">Rank</th>
             <th className="p-3">Rep</th>
             <th className="p-3">Sales</th>
-            <th className="p-3">Commission</th>
           </tr>
         </thead>
         <tbody>
-          {ranking.map((rep, index) => (
+          {normalizedRanking.map((rep, index) => (
             <tr
-              key={rep.id}
+              key={rep.id || rep.name}
               className="hover:bg-gray-50 transition cursor-pointer"
               onClick={() => setSelectedRep(rep)}
             >
@@ -40,12 +45,7 @@ export default function Leaderboard({ ranking }) {
                 />
                 <span className="font-medium text-gray-800">{rep.name}</span>
               </td>
-              <td className="p-3 text-gray-800">
-                {rep.sales || rep.yesCount || 0}
-              </td>
-              <td className="p-3 text-green-600 font-semibold">
-                ${rep.commission || 0}
-              </td>
+              <td className="p-3 text-gray-800">{rep.sales}</td>
             </tr>
           ))}
         </tbody>

@@ -14,10 +14,10 @@ export default function ProfileCard({ rep, onClose }) {
 
   // Mock weekly sales trend (replace with real later if you have dates)
   const weeklyData = [
-    { week: "W1", sales: Math.floor(rep.yesCount * 0.2) },
-    { week: "W2", sales: Math.floor(rep.yesCount * 0.3) },
-    { week: "W3", sales: Math.floor(rep.yesCount * 0.25) },
-    { week: "W4", sales: rep.yesCount },
+    { week: "W1", sales: Math.floor((rep.sales || rep.yesCount) * 0.2) },
+    { week: "W2", sales: Math.floor((rep.sales || rep.yesCount) * 0.3) },
+    { week: "W3", sales: Math.floor((rep.sales || rep.yesCount) * 0.25) },
+    { week: "W4", sales: rep.sales || rep.yesCount || 0 },
   ]
 
   const modal = (
@@ -37,7 +37,7 @@ export default function ProfileCard({ rep, onClose }) {
           ✕
         </button>
 
-        {/* Avatar */}
+        {/* Avatar + Name */}
         <div className="flex flex-col items-center mb-4">
           <Image
             src={`/icons/${rep.name.toLowerCase()}.png`}
@@ -51,15 +51,12 @@ export default function ProfileCard({ rep, onClose }) {
         </div>
 
         {/* Stats */}
-        <p className="text-gray-700">
-          <strong>Sales:</strong> {rep.yesCount}
-        </p>
-        <p className="text-green-600 font-semibold">
-          <strong>Commission:</strong> ${rep.commission}
+        <p className="text-gray-700 mb-4">
+          <strong>Sales:</strong> {rep.sales || rep.yesCount || 0}
         </p>
 
         {/* Weekly Trend */}
-        <div className="mt-6 w-full h-32">
+        <div className="mt-4 w-full h-32">
           <h3 className="text-sm font-semibold text-gray-800 mb-2">
             Weekly Sales Trend
           </h3>
