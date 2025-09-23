@@ -1,0 +1,68 @@
+[
+  {
+    "username": "kelsey",
+    "password": "kelsey123",
+    "name": "Kelsey",
+    "avatar": "/icons/kelsey.png"
+  },
+  {
+    "username": "hanif",
+    "password": "hanif123",
+    "name": "Hanif",
+    "avatar": "/icons/hanif.png"
+  },
+  {
+    "username": "anna",
+    "password": "anna123",
+    "name": "Anna",
+    "avatar": "/icons/anna.png"
+  },
+  {
+    "username": "audrey",
+    "password": "audrey123",
+    "name": "Audrey",
+    "avatar": "/icons/audrey.png"
+  },
+  {
+    "username": "taylor",
+    "password": "taylor123",
+    "name": "Taylor",
+    "avatar": "/icons/taylor.png"
+  },
+  {
+    "username": "kevin",
+    "password": "kevin123",
+    "name": "Kevin",
+    "avatar": "/icons/kevin.png"
+  },
+  {
+    "username": "sabina",
+    "password": "sabina123",
+    "name": "Sabina",
+    "avatar": "/icons/sabina.png"
+  },
+  {
+    "username": "kara",
+    "password": "kara123",
+    "name": "Kara",
+    "avatar": "/icons/kara.png"
+  },
+  {
+    "username": "darrin",
+    "password": "darrin123",
+    "name": "Darrin",
+    "avatar": "/icons/darrin.png"
+  },
+  {
+    "username": "heather",
+    "password": "heather123",
+    "name": "Heather",
+    "avatar": "/icons/heather.png"
+  },
+  {
+    "username": "joseph",
+    "password": "joseph123",
+    "name": "Joseph",
+    "avatar": "/icons/joseph.png"
+  }
+]

@@ -2,7 +2,7 @@ import Image from "next/image"
 import { useState } from "react"
 import ProfileCard from "./ProfileCard"
 
-export default function Leaderboard({ ranking }) {
+export default function Leaderboard({ ranking, currentUser }) {
   const [selectedRep, setSelectedRep] = useState(null)
 
   // Ensure sales is always a number (default 0 if missing)
@@ -29,33 +29,40 @@ export default function Leaderboard({ ranking }) {
             </tr>
           </thead>
           <tbody>
-            {normalizedRanking.map((rep, index) => (
-              <tr
-                key={rep.id || rep.name}
-                className="hover:bg-gray-50 transition cursor-pointer"
-                onClick={() => setSelectedRep(rep)}
-              >
-                <td className="p-2 sm:p-3 text-gray-800 font-medium text-sm sm:text-base">
-                  {index + 1}
-                </td>
-                <td className="p-2 sm:p-3 flex items-center gap-2 sm:gap-3 text-gray-800">
-                  <Image
-                    src={`/icons/${rep.name.toLowerCase()}.png`}
-                    alt={rep.name}
-                    width={32}
-                    height={32}
-                    className="sm:w-10 sm:h-10 rounded-full border"
-                    onError={(e) => (e.target.src = "/icons/default.png")}
-                  />
-                  <span className="font-medium text-gray-800 text-sm sm:text-base">
-                    {rep.name}
-                  </span>
-                </td>
-                <td className="p-2 sm:p-3 text-gray-800 text-sm sm:text-base">
-                  {rep.sales}
-                </td>
-              </tr>
-            ))}
+            {normalizedRanking.map((rep, index) => {
+              const isCurrentUser =
+                currentUser && rep.name.toLowerCase() === currentUser.name.toLowerCase()
+
+              return (
+                <tr
+                  key={rep.id || rep.name}
+                  className={`transition cursor-pointer ${
+                    isCurrentUser
+                      ? "bg-orange-100 hover:bg-orange-200 font-bold"
+                      : "hover:bg-gray-50"
+                  }`}
+                  onClick={() => setSelectedRep(rep)}
+                >
+                  <td className="p-2 sm:p-3 text-gray-800 text-sm sm:text-base">
+                    {index + 1}
+                  </td>
+                  <td className="p-2 sm:p-3 flex items-center gap-2 sm:gap-3 text-gray-800">
+                    <Image
+                      src={`/icons/${rep.name.toLowerCase()}.png`}
+                      alt={rep.name}
+                      width={32}
+                      height={32}
+                      className="sm:w-10 sm:h-10 rounded-full border"
+                      onError={(e) => (e.target.src = "/icons/default.png")}
+                    />
+                    <span className="text-sm sm:text-base">{rep.name}</span>
+                  </td>
+                  <td className="p-2 sm:p-3 text-gray-800 text-sm sm:text-base">
+                    {rep.sales}
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>

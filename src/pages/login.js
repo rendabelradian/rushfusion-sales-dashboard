@@ -7,19 +7,30 @@ export default function Login() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // Check against environment variables
-    if (
-      username === process.env.NEXT_PUBLIC_DASHBOARD_USER &&
-      password === process.env.NEXT_PUBLIC_DASHBOARD_PASS
-    ) {
-      // Save login state
-      localStorage.setItem("isLoggedIn", "true")
-      router.push("/") // redirect to homepage
-    } else {
-      setError("Invalid username or password")
+    try {
+      // Load users.json
+      const res = await fetch("/data/users.json")
+      const users = await res.json()
+
+      // Find the user
+      const user = users.find(
+        (u) => u.username === username && u.password === password
+      )
+
+      if (user) {
+        // Save login state with user info
+        localStorage.setItem("isLoggedIn", "true")
+        localStorage.setItem("currentUser", JSON.stringify(user))
+        router.push("/") // redirect to homepage
+      } else {
+        setError("Invalid username or password")
+      }
+    } catch (err) {
+      console.error("Login error:", err)
+      setError("Something went wrong. Please try again.")
     }
   }
 
