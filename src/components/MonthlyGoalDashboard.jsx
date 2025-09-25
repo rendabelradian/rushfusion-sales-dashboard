@@ -13,11 +13,13 @@ import {
 export default function MonthlyGoalDashboard({ ranking }) {
   if (!ranking || ranking.length === 0) return null
 
-  // Prepare sales data
-  const data = ranking.map((rep) => ({
-    name: rep.name,
-    sales: rep.sales || rep.yesCount || 0,
-  }))
+  // Prepare sales data (exclude admins)
+  const data = ranking
+    .filter((rep) => !rep.isAdmin) // 👈 filter out admins
+    .map((rep) => ({
+      name: rep.name,
+      sales: rep.sales || rep.yesCount || 0,
+    }))
 
   return (
     <div className="mt-16 w-full max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6">
