@@ -39,14 +39,17 @@ export default function ProfileCard({ rep, onClose }) {
 
         {/* Avatar + Name */}
         <div className="flex flex-col items-center mb-4">
-          <Image
-            src={`/icons/${rep.name.toLowerCase()}.png`}
-            alt={rep.name}
-            width={80}
-            height={80}
-            className="rounded-full border-2 border-gray-300"
-            onError={(e) => (e.target.src = "/icons/default.png")}
-          />
+          {/* Only show avatar if not admin */}
+          {!rep.isAdmin && (
+            <Image
+              src={`/icons/${rep.name.toLowerCase()}.png`}
+              alt={rep.name}
+              width={80}
+              height={80}
+              className="rounded-full border-2 border-gray-300"
+              onError={(e) => (e.target.src = "/icons/default.png")}
+            />
+          )}
           <h2 className="mt-3 text-xl font-bold text-gray-900">{rep.name}</h2>
         </div>
 
@@ -65,7 +68,7 @@ export default function ProfileCard({ rep, onClose }) {
               <XAxis
                 dataKey="week"
                 stroke="#888"
-                tick={{ fontSize: 10, fill: "#888" }} // ✅ fixed
+                tick={{ fontSize: 10, fill: "#888" }}
               />
               <YAxis hide />
               <Tooltip />

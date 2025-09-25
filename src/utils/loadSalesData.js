@@ -15,21 +15,39 @@ export async function loadSalesData() {
   const usersRes = await fetch("/data/users.json")
   const users = await usersRes.json()
 
-  // Normalize + merge
-  return parsed.data.map((row, index) => {
+  // Merge sales reps from CSV
+  const salesData = parsed.data.map((row, index) => {
     const name = row.Name
     const sales = Number(row["Amount of Sales"]) || 0
 
-    // Find matching user for avatar/isAdmin
     const user = users.find((u) => u.name === name)
 
     return {
       id: index + 1,
       name,
       sales,
-      // commission removed everywhere (you mentioned that earlier)
       avatar: user?.avatar || "/icons/default.png",
       isAdmin: user?.isAdmin || false,
     }
   })
+
+  // Add admins (if not already included in CSV)
+  users
+    .filter((u) => u.isAdmin)
+    .forEach((admin) => {
+      const exists = salesData.find(
+        (rep) => rep.name.toLowerCase() === admin.name.toLowerCase()
+      )
+      if (!exists) {
+        salesData.push({
+          id: salesData.length + 1,
+          name: admin.name,
+          sales: 0,
+          avatar: null, // admins don't need avatar
+          isAdmin: true,
+        })
+      }
+    })
+
+  return salesData
 }

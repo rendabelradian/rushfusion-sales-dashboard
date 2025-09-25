@@ -3,12 +3,14 @@ import { useRouter } from "next/router"
 import Podium from "@/components/Podium"
 import Leaderboard from "@/components/Leaderboard"
 import MonthlyGoalDashboard from "@/components/MonthlyGoalDashboard"
+import PersonalDashboard from "@/components/PersonalDashboard"
 import { rankPods } from "@/utils/rankPods"
 import { loadSalesData } from "@/utils/loadSalesData"
 
 export default function Home() {
   const [ranking, setRanking] = useState(null)
   const [currentUser, setCurrentUser] = useState(null)
+  const [activeTab, setActiveTab] = useState("personal") // default tab
   const router = useRouter()
 
   useEffect(() => {
@@ -49,7 +51,8 @@ export default function Home() {
           </div>
           {currentUser && (
             <p className="text-sm sm:text-base text-gray-600 mt-2 sm:mt-0">
-              👋 Welcome, <span className="font-semibold">{currentUser.name}</span>
+              👋 Welcome,{" "}
+              <span className="font-semibold">{currentUser.name}</span>
             </p>
           )}
         </div>
@@ -63,14 +66,50 @@ export default function Home() {
         </button>
       </div>
 
-      {/* Podium */}
-      {ranking && <Podium ranking={ranking} />}
+      {/* Tab Navigation */}
+      <div className="flex gap-6 border-b mb-6 w-full max-w-5xl">
+        <button
+          onClick={() => setActiveTab("personal")}
+          className={`pb-2 ${
+            activeTab === "personal"
+              ? "border-b-2 border-blue-600 font-bold text-blue-600"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+        >
+          Personal
+        </button>
+        <button
+          onClick={() => setActiveTab("team")}
+          className={`pb-2 ${
+            activeTab === "team"
+              ? "border-b-2 border-blue-600 font-bold text-blue-600"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+        >
+          Team
+        </button>
+      </div>
 
-      {/* Monthly Goal Dashboard */}
-      {ranking && <MonthlyGoalDashboard ranking={ranking} />}
+      {/* Tab Content */}
+      <div className="w-full">
+        {activeTab === "personal" && (
+          <PersonalDashboard
+            currentUser={currentUser}
+            salesData={ranking}
+            onSwitchTab={setActiveTab} // ✅ pass down handler
+          />
+        )}
 
-      {/* Leaderboard */}
-      {ranking && <Leaderboard ranking={ranking} currentUser={currentUser} />}
+        {activeTab === "team" && (
+          <>
+            {ranking && <Podium ranking={ranking} />}
+            {ranking && <MonthlyGoalDashboard ranking={ranking} />}
+            {ranking && (
+              <Leaderboard ranking={ranking} currentUser={currentUser} />
+            )}
+          </>
+        )}
+      </div>
     </div>
   )
 }
