@@ -11,6 +11,9 @@ export default function Leaderboard({ ranking, currentUser }) {
     sales: rep.sales !== undefined ? rep.sales : rep.yesCount || 0,
   }))
 
+  // Filter out admins so they don’t appear on the leaderboard
+  const visibleRanking = normalizedRanking.filter((rep) => !rep.isAdmin)
+
   return (
     <div className="mt-12 w-full max-w-5xl mx-auto px-2 sm:px-0">
       {/* Title */}
@@ -29,9 +32,10 @@ export default function Leaderboard({ ranking, currentUser }) {
             </tr>
           </thead>
           <tbody>
-            {normalizedRanking.map((rep, index) => {
+            {visibleRanking.map((rep, index) => {
               const isCurrentUser =
-                currentUser && rep.name.toLowerCase() === currentUser.name.toLowerCase()
+                currentUser &&
+                rep.name.toLowerCase() === currentUser.name.toLowerCase()
 
               return (
                 <tr
@@ -39,7 +43,7 @@ export default function Leaderboard({ ranking, currentUser }) {
                   className={`transition cursor-pointer ${
                     isCurrentUser
                       ? "bg-orange-100 hover:bg-orange-200 font-bold"
-                      : "hover:bg-gray-50"
+                      : "odd:bg-white even:bg-gray-50 hover:bg-gray-100"
                   }`}
                   onClick={() => setSelectedRep(rep)}
                 >
@@ -47,14 +51,17 @@ export default function Leaderboard({ ranking, currentUser }) {
                     {index + 1}
                   </td>
                   <td className="p-2 sm:p-3 flex items-center gap-2 sm:gap-3 text-gray-800">
-                    <Image
-                      src={`/icons/${rep.name.toLowerCase()}.png`}
-                      alt={rep.name}
-                      width={32}
-                      height={32}
-                      className="sm:w-10 sm:h-10 rounded-full border"
-                      onError={(e) => (e.target.src = "/icons/default.png")}
-                    />
+                    {/* Show avatar for reps only */}
+                    {!rep.isAdmin && (
+                      <Image
+                        src={`/icons/${rep.name.toLowerCase()}.png`}
+                        alt={rep.name}
+                        width={32}
+                        height={32}
+                        className="sm:w-10 sm:h-10 rounded-full border"
+                        onError={(e) => (e.target.src = "/icons/default.png")}
+                      />
+                    )}
                     <span className="text-sm sm:text-base">{rep.name}</span>
                   </td>
                   <td className="p-2 sm:p-3 text-gray-800 text-sm sm:text-base">

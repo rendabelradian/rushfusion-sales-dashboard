@@ -21,9 +21,18 @@ export default function Login() {
       )
 
       if (user) {
-        // Save login state with user info
+        // Save login state with user info (including isAdmin)
         localStorage.setItem("isLoggedIn", "true")
-        localStorage.setItem("currentUser", JSON.stringify(user))
+        localStorage.setItem(
+          "currentUser",
+          JSON.stringify({
+            username: user.username,
+            name: user.name,
+            avatar: user.avatar,
+            isAdmin: user.isAdmin || false, // default false if missing
+          })
+        )
+
         router.push("/") // redirect to homepage
       } else {
         setError("Invalid username or password")

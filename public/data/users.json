@@ -3,66 +3,35 @@
     "username": "kelsey",
     "password": "kelsey123",
     "name": "Kelsey",
-    "avatar": "/icons/kelsey.png"
+    "avatar": "/icons/kelsey.png",
+    "isAdmin": false
   },
   {
     "username": "hanif",
     "password": "hanif123",
     "name": "Hanif",
-    "avatar": "/icons/hanif.png"
+    "avatar": "/icons/hanif.png",
+    "isAdmin": false
   },
   {
     "username": "anna",
     "password": "anna123",
     "name": "Anna",
-    "avatar": "/icons/anna.png"
+    "avatar": "/icons/anna.png",
+    "isAdmin": false
   },
   {
-    "username": "audrey",
-    "password": "audrey123",
-    "name": "Audrey",
-    "avatar": "/icons/audrey.png"
+    "username": "abel",
+    "password": "abel123",
+    "name": "Abel",
+    "avatar": "/icons/default.png",
+    "isAdmin": true
   },
   {
-    "username": "taylor",
-    "password": "taylor123",
-    "name": "Taylor",
-    "avatar": "/icons/taylor.png"
-  },
-  {
-    "username": "kevin",
-    "password": "kevin123",
-    "name": "Kevin",
-    "avatar": "/icons/kevin.png"
-  },
-  {
-    "username": "sabina",
-    "password": "sabina123",
-    "name": "Sabina",
-    "avatar": "/icons/sabina.png"
-  },
-  {
-    "username": "kara",
-    "password": "kara123",
-    "name": "Kara",
-    "avatar": "/icons/kara.png"
-  },
-  {
-    "username": "darrin",
-    "password": "darrin123",
-    "name": "Darrin",
-    "avatar": "/icons/darrin.png"
-  },
-  {
-    "username": "heather",
-    "password": "heather123",
-    "name": "Heather",
-    "avatar": "/icons/heather.png"
-  },
-  {
-    "username": "joseph",
-    "password": "joseph123",
-    "name": "Joseph",
-    "avatar": "/icons/joseph.png"
+    "username": "ilan",
+    "password": "ilan123",
+    "name": "Ilan",
+    "avatar": "/icons/default.png",
+    "isAdmin": true
   }
 ]
